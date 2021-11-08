@@ -1,7 +1,7 @@
 sinhromodul.syncposts:
   path: '/sync/articles'
   defaults:
-    _controller: '\Drupal\sinhromodul\Controller\SinhroController::newpage'
+    _controller: '\Drupal\sinhromodul\Controller\SinhroController::posts'
     _title: 'Posts'
   requirements:
     _permission: 'access content'
@@ -12,4 +12,12 @@ sinhromodul.frontpage:
     _controller: '\Drupal\sinhromodul\Controller\FrontPageController::frontpage'
     _title: 'Home'
   requirements:
-    _permission: 'access content'      
+    _permission: 'access content'    
+    
+sinhromodul.tasks:
+  path: '/sync/tasks'
+  defaults:
+    _controller: '\Drupal\sinhromodul\Controller\SinhroController::tasks'
+    _title: 'Tasks'
+  requirements:
+    _permission: 'access content'
