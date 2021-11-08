@@ -4,6 +4,7 @@ namespace Drupal\sinhromodul\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\Entity\Node;
+use phpDocumentor\Reflection\PseudoTypes\False_;
 
 class SinhroController extends ControllerBase {
 
@@ -45,7 +46,7 @@ class SinhroController extends ControllerBase {
     public function tasks() {
         $data = file_get_contents('https://jsonplaceholder.typicode.com/todos');
         $tasks = json_decode($data, TRUE);
-        //dsm($tasks); //userId, id, title, completed
+        dsm($tasks); //userId, id, title, completed
 
         foreach($tasks as $task) {
             $values = \Drupal::entityQuery('node')->condition('field_task_id', $task['id'])->execute();
@@ -53,21 +54,19 @@ class SinhroController extends ControllerBase {
 
             $query = \Drupal::entityQuery('user');
             $uids = $query->execute();
-            $assigned = '';
+
+            if(in_array($task['userId'], $uids)){
+                $assigned = false;
+            } else {
+                $assigned = true;
+            };
 
             if($node_not_exists) {
-
-                // if(in_array($task['userId'], $uids)){
-                //     $assigned = 'To this user';
-                // } else {
-                //     $assigned = 'Assigned to administrator';
-                // };
-
                 $node = \Drupal::entityTypeManager()->getStorage('node')->create([
                     'type' => 'tasks',
-                    'field_user' => $task['userId'],
-                    'field_task_id' => $task['id'],
                     'title' => $task['title'],
+                    'field_task_id' => $task['id'],
+                    'field_user' => $task['userId'],
                     'field_completed' => $task['completed'],
                     'field_assigned' => $assigned
                 ]);
