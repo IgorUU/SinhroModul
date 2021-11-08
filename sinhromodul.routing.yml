@@ -1,0 +1,15 @@
+sinhromodul.syncposts:
+  path: '/sync/articles'
+  defaults:
+    _controller: '\Drupal\sinhromodul\Controller\SinhroController::newpage'
+    _title: 'Posts'
+  requirements:
+    _permission: 'access content'
+
+sinhromodul.frontpage:
+  path: '/home'
+  defaults:
+    _controller: '\Drupal\sinhromodul\Controller\FrontPageController::frontpage'
+    _title: 'Home'
+  requirements:
+    _permission: 'access content'      
